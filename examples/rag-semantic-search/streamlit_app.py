@@ -113,7 +113,8 @@ st.markdown("""
 if 'rag' not in st.session_state:
     st.session_state.update({
         'rag': None, 'documents_loaded': False, 'history': [], 'error_message': None,
-        'use_hybrid': True, 'use_llm': bool(os.getenv("GEMINI_API_KEY"))
+        'use_hybrid': True, 'use_llm': bool(os.getenv("GEMINI_API_KEY")),
+        'button_counter': 0
     })
 
 def initialize_rag(use_hybrid=True):
@@ -241,11 +242,13 @@ with col1:
     cols = st.columns(3)
     for idx, (label, suggested_query) in enumerate(query_suggestions):
         with cols[idx % 3]:
-            if st.button(label, key=f"suggestion_{idx}", use_container_width=True):
+            unique_key = f"suggestion_{idx}_{st.session_state.button_counter}"
+            if st.button(label, key=unique_key, width='stretch'):
                 if st.session_state.rag and st.session_state.documents_loaded:
                     with st.spinner("Processing..."):
                         result = st.session_state.rag.query(suggested_query, top_k=top_k, use_llm=use_llm)
                         st.session_state.history.append(result)
+                        st.session_state.button_counter += 1
                         st.rerun()
     
     st.divider()
