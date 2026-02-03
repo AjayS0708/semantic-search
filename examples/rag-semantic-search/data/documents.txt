@@ -1,0 +1,100 @@
+Artificial Intelligence (AI) is the simulation of human intelligence by machines, enabling them to perform tasks that typically require human cognition such as learning, reasoning, and problem-solving.
+Machine Learning is a subset of Artificial Intelligence that focuses on algorithms that learn from and make predictions based on data without being explicitly programmed.
+Deep Learning is a specialized branch of machine learning that uses multi-layered neural networks to automatically learn hierarchical representations of data, enabling breakthroughs in image recognition, natural language processing, and more.
+Neural networks are computing systems inspired by biological neural networks, consisting of interconnected nodes (neurons) that process information through weighted connections and activation functions.
+Natural Language Processing (NLP) is a field of AI that enables computers to understand, interpret, and generate human language, powering applications like chatbots, translation, and sentiment analysis.
+Computer Vision is an AI field that enables machines to interpret and understand visual information from images and videos, used in facial recognition, autonomous vehicles, and medical imaging.
+Reinforcement Learning is a machine learning paradigm where agents learn to make decisions by interacting with an environment and receiving rewards or penalties based on their actions.
+Transfer Learning is a technique where a model trained on one task is repurposed for a related task, significantly reducing training time and data requirements.
+Vector databases are specialized databases designed to store and efficiently search high-dimensional vector embeddings, enabling fast similarity searches crucial for AI applications.
+Embeddings are dense vector representations of data (text, images, etc.) that capture semantic meaning, allowing similar items to be close together in vector space.
+Semantic search goes beyond keyword matching to understand the intent and contextual meaning of queries, returning results based on conceptual similarity rather than exact matches.
+RAG (Retrieval Augmented Generation) is an AI framework that enhances large language models by retrieving relevant information from a knowledge base before generating responses, improving accuracy and reducing hallucinations.
+Large Language Models (LLMs) are AI models trained on vast amounts of text data that can understand and generate human-like text, powering applications like ChatGPT and GPT-4.
+Transformers are a neural network architecture that uses self-attention mechanisms to process sequential data, revolutionizing NLP and enabling models like BERT and GPT.
+Attention mechanisms allow neural networks to focus on relevant parts of input data when making predictions, significantly improving performance on tasks like translation and summarization.
+BERT (Bidirectional Encoder Representations from Transformers) is a language model that learns contextualized word representations by considering both left and right context in sentences.
+GPT (Generative Pre-trained Transformer) is a series of autoregressive language models that generate coherent text by predicting the next word in a sequence.
+Fine-tuning is the process of taking a pre-trained model and training it further on a specific task or dataset to adapt it for specialized applications.
+Prompt engineering is the practice of crafting effective input prompts to guide AI models toward desired outputs, crucial for getting optimal results from LLMs.
+Endee is a high-performance vector database optimized for AI applications, providing fast similarity search capabilities essential for semantic search, recommendation systems, and RAG implementations.
+Cosine similarity is a metric used to measure the similarity between two vectors by calculating the cosine of the angle between them, commonly used in vector search.
+K-Nearest Neighbors (KNN) is an algorithm that finds the k most similar items to a query vector, fundamental to vector database search operations.
+Dimensionality reduction techniques like PCA and t-SNE compress high-dimensional vectors into lower dimensions while preserving important relationships, useful for visualization and efficiency.
+Sentence transformers are models that encode sentences into fixed-size vector embeddings that capture semantic meaning, enabling efficient semantic similarity comparisons.
+FAISS (Facebook AI Similarity Search) is a library for efficient similarity search and clustering of dense vectors, widely used in production AI systems.
+Approximate Nearest Neighbor (ANN) search algorithms trade perfect accuracy for speed, enabling fast similarity searches in large-scale vector databases.
+Index optimization in vector databases involves choosing appropriate data structures and algorithms to balance search speed, memory usage, and accuracy.
+Batch processing in vector operations allows efficient encoding and insertion of multiple items simultaneously, significantly improving throughput.
+Real-time inference refers to the ability to generate predictions or search results with minimal latency, critical for production AI applications.
+Model quantization reduces the precision of neural network weights to decrease model size and inference time while maintaining acceptable accuracy.
+Edge AI brings AI inference to edge devices like smartphones and IoT sensors, reducing latency and preserving privacy by processing data locally.
+Explainable AI (XAI) techniques help make AI model decisions interpretable and transparent, crucial for building trust and meeting regulatory requirements.
+Data augmentation techniques artificially expand training datasets by creating modified versions of existing data, improving model robustness and generalization.
+Cross-validation is a technique for assessing model performance by training and testing on different subsets of data, helping detect overfitting.
+Hyperparameter tuning involves systematically searching for optimal model configuration values to maximize performance on a given task.
+Gradient descent is an optimization algorithm that iteratively adjusts model parameters to minimize a loss function, fundamental to training neural networks.
+Backpropagation is the algorithm used to calculate gradients of the loss function with respect to neural network weights, enabling efficient training.
+Overfitting occurs when a model learns training data too well, including noise and outliers, resulting in poor performance on new data.
+Regularization techniques like L1 and L2 add penalties to the loss function to prevent overfitting by discouraging overly complex models.
+Batch normalization is a technique that normalizes layer inputs during training, accelerating convergence and improving model stability.
+Dropout is a regularization method that randomly deactivates neurons during training to prevent overfitting and improve generalization.
+Convolutional Neural Networks (CNNs) are specialized neural networks designed for processing grid-like data such as images, using convolutional layers to detect spatial patterns.
+Recurrent Neural Networks (RNNs) are neural networks designed for sequential data, maintaining hidden states that capture information from previous inputs in a sequence.
+Long Short-Term Memory (LSTM) networks are a type of RNN that can learn long-term dependencies by using gating mechanisms to control information flow.
+Generative Adversarial Networks (GANs) consist of two neural networks competing against each other, with a generator creating fake data and a discriminator distinguishing real from fake.
+Autoencoders are neural networks that learn compressed representations of data by training to reconstruct inputs, useful for dimensionality reduction and anomaly detection.
+Support Vector Machines (SVMs) are supervised learning algorithms that find optimal hyperplanes to separate different classes in high-dimensional space.
+Random Forests are ensemble learning methods that build multiple decision trees and combine their predictions for improved accuracy and robustness.
+Decision Trees are tree-structured models that make predictions by learning decision rules from features, easy to interpret but prone to overfitting.
+Naive Bayes classifiers are probabilistic models based on Bayes' theorem with strong independence assumptions, simple yet effective for text classification.
+Logistic Regression is a statistical model used for binary classification that predicts probabilities using a logistic function.
+K-Means clustering is an unsupervised learning algorithm that partitions data into K clusters by minimizing within-cluster variance.
+Principal Component Analysis (PCA) is a dimensionality reduction technique that transforms data into orthogonal components capturing maximum variance.
+Feature engineering is the process of creating, selecting, and transforming raw data features to improve machine learning model performance.
+Feature extraction identifies and extracts relevant information from raw data, converting it into a format suitable for machine learning algorithms.
+One-hot encoding converts categorical variables into binary vectors, enabling machine learning algorithms to process categorical data.
+Tokenization is the process of breaking text into smaller units like words or subwords, a fundamental preprocessing step in NLP.
+Lemmatization reduces words to their base or dictionary form, helping normalize text while preserving meaning.
+Stemming reduces words to their root form by removing suffixes, a simpler but less accurate alternative to lemmatization.
+Word embeddings like Word2Vec and GloVe represent words as dense vectors that capture semantic relationships based on context.
+BLEU (Bilingual Evaluation Understudy) is a metric for evaluating machine translation quality by comparing generated text to reference translations.
+ROUGE (Recall-Oriented Understudy for Gisting Evaluation) measures the quality of summaries by comparing them to reference summaries.
+Precision measures the proportion of predicted positive cases that are actually positive, indicating model accuracy for positive predictions.
+Recall (sensitivity) measures the proportion of actual positive cases correctly identified by the model, indicating coverage.
+F1 Score is the harmonic mean of precision and recall, providing a single metric that balances both measures.
+ROC (Receiver Operating Characteristic) curves visualize binary classifier performance by plotting true positive rate against false positive rate.
+AUC (Area Under Curve) quantifies overall model performance across all classification thresholds, with 1.0 being perfect.
+Confusion matrices display classification results showing true positives, true negatives, false positives, and false negatives.
+Mean Absolute Error (MAE) measures average absolute differences between predicted and actual values in regression tasks.
+Mean Squared Error (MSE) calculates the average squared differences between predictions and actual values, penalizing larger errors more heavily.
+R-squared measures the proportion of variance in the dependent variable explained by the model, indicating goodness of fit.
+Bias-variance tradeoff describes the balance between model simplicity (high bias) and complexity (high variance) for optimal generalization.
+Ensemble learning combines multiple models to produce better predictions than individual models, reducing errors and improving robustness.
+Bagging (Bootstrap Aggregating) trains multiple models on different subsets of data and averages their predictions to reduce variance.
+Boosting sequentially trains models where each new model focuses on correcting errors made by previous models, reducing bias.
+XGBoost (Extreme Gradient Boosting) is a highly efficient and scalable implementation of gradient boosting, popular in machine learning competitions.
+LightGBM is a gradient boosting framework optimized for speed and memory efficiency, using histogram-based algorithms.
+CatBoost is a gradient boosting library that handles categorical features automatically and reduces overfitting through ordered boosting.
+Imbalanced datasets have unequal class distributions, requiring techniques like oversampling, undersampling, or class weighting to handle effectively.
+SMOTE (Synthetic Minority Over-sampling Technique) generates synthetic samples for minority classes to address imbalanced datasets.
+Active learning selectively queries labels for the most informative samples, reducing labeling costs while maintaining model performance.
+Semi-supervised learning leverages both labeled and unlabeled data, using large amounts of unlabeled data to improve model performance.
+Self-supervised learning creates supervised learning tasks from unlabeled data, enabling models to learn representations without manual labels.
+Zero-shot learning enables models to recognize classes not seen during training by leveraging semantic relationships between classes.
+Few-shot learning trains models to learn from very few examples per class, mimicking human-like learning from limited data.
+Meta-learning (learning to learn) trains models to quickly adapt to new tasks with minimal data by learning from multiple related tasks.
+Neural Architecture Search (NAS) automatically discovers optimal neural network architectures for specific tasks, reducing manual design effort.
+Knowledge distillation transfers knowledge from large teacher models to smaller student models, maintaining performance while reducing size.
+Continual learning enables models to learn new tasks sequentially without forgetting previously learned information, addressing catastrophic forgetting.
+Federated learning trains models across decentralized devices without sharing raw data, preserving privacy while enabling collaborative learning.
+Differential privacy adds controlled noise to data or computations to protect individual privacy while maintaining statistical utility.
+Adversarial examples are inputs intentionally designed to fool machine learning models, highlighting vulnerabilities in AI systems.
+Adversarial training improves model robustness by training on both normal and adversarial examples, increasing resistance to attacks.
+Model interpretability techniques like SHAP and LIME explain individual predictions by identifying important features and their contributions.
+MLOps (Machine Learning Operations) applies DevOps principles to machine learning, focusing on automation, monitoring, and lifecycle management.
+Model versioning tracks different iterations of machine learning models, enabling reproducibility and rollback capabilities.
+A/B testing compares two model versions in production by randomly assigning users to each version and measuring performance differences.
+Feature stores centralize feature engineering and management, providing consistent feature access across training and serving environments.
+Model monitoring tracks deployed model performance metrics to detect degradation, drift, or anomalies requiring intervention.
+Data drift occurs when input data distributions change over time, potentially degrading model performance in production.
