@@ -40,7 +40,8 @@ This approach significantly reduces hallucinations and ensures answers are based
 - 🎨 **Interactive Web UI**: Beautiful Streamlit interface with hybrid search toggle
 - 📚 **Context-Aware Answers**: Retrieves and displays source documents with multiple score metrics
 - ⚡ **Fast Performance**: Optimized vector search with minimal latency
-- 🔧 **Configurable**: Adjustable retrieval parameters and LLM integration
+- 🔧 **Configurable**: Adjustable retrieval parameters and optional LLM integration
+- 🤖 **Works Without LLM**: Core retrieval system fully functional without any API keys
 - 📊 **Query History**: Track and review previous queries
 - 🎯 **Production Ready**: Clean code with error handling and logging
 
@@ -91,8 +92,11 @@ Top-K Retrieved Documents
   - SIMD-optimized (AVX2/AVX512/NEON/SVE2)
   - Docker deployment ready
   - Official docs: [docs.endee.io](https://docs.endee.io)
-- **Embeddings**: Sentence Transformers (all-MiniLM-L6-v2)
-- **LLM**: Google Gemini 2.5 Flash for answer generation
+- **Embeddings**: Sentence Transformers (all-MiniLM-L6-v2, 384 dimensions)
+- **Re-ranking**: Cross-Encoder (ms-marco-MiniLM-L-6-v2)
+- **Keyword Search**: BM25 (rank-bm25 library)
+- **LLM (Optional)**: Google Gemini 2.5 Flash or OpenAI GPT for answer generation
+  - **Works without LLM**: Returns raw context documents if no API key provided
 - **Web Framework**: Streamlit for interactive UI
 - **Language**: Python 3.8+
 - **Binary Protocol**: MessagePack for efficient data transfer
@@ -174,8 +178,36 @@ curl http://localhost:8080/api/v1/health
 - `-v endee-data:/data`: Persist data in Docker volume (survives container restarts)
 - `--name endee-server`: Easy container management
 
-### Step 5: Configure Environment (Optional - for AI Answers)
-Create a `.env` file to enable Gemini AI for intelligent answer generation:
+**Docker Deployment:**
+
+![Docker Container](./Screenshots/Docker%20Container.png)
+*Endee server running as a Docker container with port mapping and health checks*
+
+![Docker Volume](./Screenshots/Docker%20Volume.png)
+*Persistent volume for data storage ensuring data survives container restarts*
+
+### Step 5: Access Endee Dashboard (Optional)
+Once Endee server is running, you can access the built-in management dashboard:
+```bash
+# Open in browser
+http://localhost:8080
+```
+
+![Endee Dashboard](./Screenshots/Endee%20Index%20Overview.png)
+*Endee Vector Management Dashboard - Real-time monitoring of the documents index with 384-dimensional embeddings, cosine similarity, and performance metrics*
+
+**Endee Dashboard Features:**
+- πŸ"Š **Index Overview**: Monitor all vector indexes and their configurations
+- πŸ"ˆ **Performance Metrics**: Real-time statistics (dimensions, space type, record count)
+- πŸ'Ύ **Data Management**: View index details, backups, and system health
+- βš™οΈ **Configuration**: Manage vector indexes with 384-dimensional embeddings
+
+The dashboard provides visual confirmation that your vectors are stored and indexed correctly in Endee.
+
+### Step 6: Configure LLM (Optional - Enhanced Answer Generation)
+**⚠️ Note**: The RAG system works perfectly without any LLM API keys. It will return the retrieved context documents directly.
+
+To enable AI-powered answer generation with natural language responses, create a `.env` file:
 ```bash
 # Copy the example
 cp .env.example .env
@@ -184,7 +216,14 @@ cp .env.example .env
 echo "GEMINI_API_KEY=your_gemini_api_key_here" >> .env
 ```
 
-**Note**: Without a Gemini API key, the system will return raw retrieved text instead of AI-generated answers.
+**Two Modes of Operation:**
+
+| Mode | When | Output |
+|------|------|--------|
+| **Without LLM** | No API key in `.env` | Returns raw retrieved documents (works immediately) |
+| **With LLM** | Gemini/OpenAI key in `.env` | Returns AI-generated natural language answers |
+
+Both modes provide full retrieval functionality with hybrid search, re-ranking, and score visualization.
 
 ## 🚀 Usage
 
