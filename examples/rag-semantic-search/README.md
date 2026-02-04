@@ -372,13 +372,23 @@ context = "\n".join([doc['text'] for doc in results])
 answer = generate_answer(query, context)
 ```
 
-## 📸 Screenshots
+## � App Screenshots
 
-### Web Interface
-- **Home Page**: Clean interface with connection status
-- **Query Results**: Answers with source attribution
-- **History View**: Track previous queries
-- **Settings Panel**: Configurable parameters
+### 🟣 Main Dashboard
+![Main Dashboard](./Screenshots/Dashboard.png)
+*Interactive interface with configuration sidebar, quick start queries, statistics panel, and query history*
+
+### 🟣 Query Results with AI Answers
+![Query Results](./Screenshots/Query%20Result.png)
+*AI-powered answers using Google Gemini with source attribution and query history*
+
+### 🟣 Score Analysis & Visualization
+![Score Analysis](./Screenshots/Score%20Analysis.png)
+*Interactive Plotly charts comparing Vector, BM25, Hybrid, and Rerank scores across sources*
+
+### 🟣 Detailed Source Documents
+![Source Documents](./Screenshots/Source%20Details.png)
+*Complete source text with transparent scoring: Vector, BM25, Hybrid scores for each document*
 
 ## 🔄 Future Enhancements
 
