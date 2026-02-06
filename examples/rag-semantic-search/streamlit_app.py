@@ -268,7 +268,7 @@ with col1:
         help="Ask any question related to the loaded documents"
     )
     
-    col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 4])
+    col_btn1, col_btn2 = st.columns([1, 1])
     with col_btn1:
         ask_button = st.button("🔍 Ask", type="primary", disabled=not st.session_state.documents_loaded)
     with col_btn2:
