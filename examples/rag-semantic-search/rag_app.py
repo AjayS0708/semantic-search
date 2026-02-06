@@ -200,7 +200,16 @@ class EndeeRAG:
         if not relevant_docs:
             return "I couldn't find relevant information to answer your question. Try rephrasing or asking about topics in the knowledge base."
         
-        context_texts = [doc.get('text', '') or doc.get('metadata', {}).get('text', '') for doc in relevant_docs if doc.get('text', '') or doc.get('metadata', {}).get('text', '')]
+        # Extract text content from docs, checking multiple possible locations
+        context_texts = []
+        for doc in relevant_docs:
+            text = doc.get('text', '') or doc.get('metadata', {}).get('text', '') or self.doc_store.get(doc.get('id', ''), '')
+            if text and text != f"Document {doc.get('id', '')}":
+                context_texts.append(text)
+        
+        if not context_texts:
+            return "I found relevant documents but couldn't extract their text content. Please check the document storage."
+        
         context = "\n\n".join(context_texts)
         
         if use_llm:
@@ -268,10 +277,16 @@ Answer:"""
 def load_sample_documents(file_path: str = "data/documents.txt") -> List[Dict[str, str]]:
     """Load documents from file"""
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
+        # Get the directory where this script is located
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        # Resolve the file path relative to the script directory
+        full_path = os.path.join(script_dir, file_path) if not os.path.isabs(file_path) else file_path
+        
+        with open(full_path, 'r', encoding='utf-8') as f:
             return [{"id": f"doc_{idx}", "text": line.strip(), "source": file_path}
                     for idx, line in enumerate(f, 1) if line.strip()]
-    except Exception:
+    except Exception as e:
+        print(f"Error loading documents: {str(e)}")
         return []
 
 

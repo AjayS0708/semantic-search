@@ -118,7 +118,11 @@ if 'rag' not in st.session_state:
     })
 
 def initialize_rag(use_hybrid=True):
-    """Initialize RAG system with re-ranking and hybrid search"""
+    """Initialize RAG system with re-ranking and optional hybrid search
+    
+    Args:
+        use_hybrid: Enable hybrid search combining vector (70%) + BM25 (30%)
+    """
     try:
         rag = EndeeRAG(use_reranking=True, use_hybrid=use_hybrid)
         if not rag.check_endee_connection():
@@ -133,11 +137,15 @@ def initialize_rag(use_hybrid=True):
 def load_documents():
     """Load and insert documents"""
     if st.session_state.rag is None:
+        st.error("❌ Please connect to Endee first!")
         return False
     
     try:
         with st.spinner("Loading documents..."):
             documents = load_sample_documents()
+            if not documents:
+                st.error("❌ No documents found. Check that data/documents.txt exists.")
+                return False
             success, message = st.session_state.rag.insert_documents(documents)
             st.session_state.documents_loaded = success
             (st.success if success else st.error)(f"{'✅' if success else '❌'} {message}")
