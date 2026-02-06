@@ -3,16 +3,14 @@ Test Hybrid Search (Vector + BM25) Implementation
 Demonstrates the improvement from combining semantic and keyword search
 """
 
-from rag_app import EndeeRAG
+# Optimization: Removed duplicate document loading code - use existing function
+from rag_app import EndeeRAG, load_sample_documents
 
 def test_hybrid_search():
     """Test hybrid search vs vector-only search"""
     
-    # Load documents
-    with open('data/documents.txt', 'r', encoding='utf-8') as f:
-        texts = [line.strip() for line in f if line.strip()]
-    
-    documents = [{"id": f"doc_{i}", "text": text} for i, text in enumerate(texts)]
+    # Load documents using shared function (eliminates code duplication)
+    documents = load_sample_documents()
     
     print(f"📚 Loaded {len(documents)} documents\n")
     
