@@ -334,7 +334,8 @@ with col1:
                         template='plotly_white'
                     )
                     
-                    st.plotly_chart(fig, use_container_width=True)
+                    # Fixed: Updated to use width='stretch' instead of deprecated use_container_width
+                    st.plotly_chart(fig, width='stretch')
                     st.success(f"🏆 Best Match: {chart_data[0]['Source']} with Hybrid Score: {chart_data[0]['Hybrid']:.3f}")
             
             st.divider()
