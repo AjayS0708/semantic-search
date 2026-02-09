@@ -2,9 +2,16 @@
 
 **Endee (nD)** is a specialized, high-performance vector database built for speed and efficiency. This guide covers supported platforms, dependency requirements, and detailed build instructions using both our automated installer and manual CMake configuration.
 
+there are 3 ways to build and run endee:
+1. quick installation and run using install.sh and run.sh scripts
+2. manual build using cmake
+3. using docker
+
+also you can run endee using docker from docker hub without building it locally. refer to section 4 for more details.
+
 ---
 
-## 1. System Requirements
+## System Requirements
 
 Before installing, ensure your system meets the following hardware and operating system requirements.
 
@@ -17,17 +24,22 @@ Before installing, ensure your system meets the following hardware and operating
 
 The following packages are required for compilation.
 
-`clang-19`, `cmake`, `build-essential`, `libssl-dev`, `libcurl4-openssl-dev`
+ `clang-19`, `cmake`, `build-essential`, `libssl-dev`, `libcurl4-openssl-dev`
 
 > **Note:** The build system requires **Clang 19** (or a compatible recent Clang version) supporting C++20.
 
 ---
 
-## 2. Quick Installation (Recommended)
+## 1. Quick Installation (Recommended)
 
 The easiest way to build **ndd** is using the included `install.sh` script. This script handles OS detection, dependency checks, and configuration automatically.
 
 ### Usage
+
+First, ensure the script is executable:
+```bash
+chmod +x ./install.sh
+```
 
 Run the script from the root of the repository. You **must** provide arguments for the build mode and/or CPU optimization.
 
@@ -60,6 +72,7 @@ Select the flag matching your hardware to enable SIMD optimizations.
 
 > **Note:** The `--avx512` build configuration enforces mandatory runtime checks for specific instruction sets. To successfully run this build, your CPU must support **`avx512` (Foundation), `avx512_fp16`, `avx512_vnni`, `avx512bw`, and `avx512_vpopcntdq`**; if any of these extensions are missing, the database will fail to initialize and exit immediately to avoid runtime crashes.
 
+
 ### Example Commands
 
 **Build for Production (Intel/AMD with AVX2):**
@@ -74,9 +87,67 @@ Select the flag matching your hardware to enable SIMD optimizations.
 ./install.sh --debug_all --neon
 ```
 
----
+### Running the Server
 
-## 3. Manual Build (Advanced)
+We provide a `run.sh` script to simplify running the server. It automatically detects the built binary and uses `ndd_data_dir=./data` by default.
+
+First, ensure the script is executable:
+
+```bash
+chmod +x ./run.sh
+```
+
+Then run the script:
+
+```bash
+./run.sh
+```
+
+This will automatically identify the latest binary and start the server.
+
+#### Options
+
+You can override the defaults using arguments:
+
+*   `ndd_data_dir=DIR`: Set the data directory.
+*   `binary_file=FILE`: Set the binary file to run.
+*   `ndd_auth_token=TOKEN`: Set the authentication token (leave empty/ignore to run without authentication).
+
+#### Examples
+
+**Run with custom data directory:**
+
+```bash
+./run.sh ndd_data_dir=./my_data
+```
+
+**Run specific binary:**
+
+```bash
+./run.sh binary_file=./build/ndd-avx2
+```
+
+**Run with authentication token:**
+
+```bash
+./run.sh ndd_auth_token=your_token
+```
+
+
+**Run with all options**
+
+```bash
+./run.sh ndd_data_dir=./my_data binary_file=./build/ndd-avx2 ndd_auth_token=your_token
+```
+
+**For Help**
+
+```bash
+./run.sh --help
+```
+
+
+## 2. Manual Build (Advanced)
 
 If you prefer to configure the build manually or integrate it into an existing install pipeline, you can use `cmake` directly.
 
@@ -93,14 +164,16 @@ Run `cmake` with the appropriate flags. You must manually define the compiler if
 **Configuration Flags:**
 
 * **Debug Options:**
-  * `-DDEBUG=ON` (Enable debug symbols/O0)
-  * `-DND_DEBUG=ON` (Enable internal logging)
+* `-DDEBUG=ON` (Enable debug symbols/O0)
+* `-DND_DEBUG=ON` (Enable internal logging)
+
 
 * **SIMD Selectors (Choose One):**
-  * `-DUSE_AVX2=ON`
-  * `-DUSE_AVX512=ON`
-  * `-DUSE_NEON=ON`
-  * `-DUSE_SVE2=ON`
+* `-DUSE_AVX2=ON`
+* `-DUSE_AVX512=ON`
+* `-DUSE_NEON=ON`
+* `-DUSE_SVE2=ON`
+
 
 **Example (x86_64 AVX512 Release):**
 
@@ -116,9 +189,7 @@ cmake -DCMAKE_BUILD_TYPE=Release \
 make -j$(nproc)
 ```
 
----
-
-## 4. Running ndd
+### Running the Built Binary
 
 After a successful build, the binary will be generated in the `build/` directory.
 
@@ -131,9 +202,11 @@ The output binary name depends on the SIMD flag used during compilation:
 * `ndd-neon` (or `ndd-neon-darwin` for mac)
 * `ndd-sve2`
 
+A symlink called `ndd` links to the binary compiled for the current build.
+
 ### Runtime Environment Variables
 
-Some enviroment variables **ndd** reads at runtime:
+Some environment variables **ndd** reads at runtime:
 
 * `NDD_DATA_DIR`: Defines the data directory
 * `NDD_AUTH_TOKEN`: Optional authentication token (see below)
@@ -143,19 +216,17 @@ Some enviroment variables **ndd** reads at runtime:
 **ndd** supports two authentication modes:
 
 **Open Mode (No Authentication)** - Default when `NDD_AUTH_TOKEN` is not set:
-
 ```bash
 # All APIs work without authentication
-./build/ndd-avx2
+./build/ndd
 curl http://{{BASE_URL}}/api/v1/index/list
 ```
 
 **Token Mode** - When `NDD_AUTH_TOKEN` is set:
-
 ```bash
 # Generate a secure token
 export NDD_AUTH_TOKEN=$(openssl rand -hex 32)
-./build/ndd-avx2
+./build/ndd
 
 # All protected APIs require the token in Authorization header
 curl -H "Authorization: $NDD_AUTH_TOKEN" http://{{BASE_URL}}/api/v1/index/list
@@ -171,18 +242,20 @@ mkdir -p ./data
 
 # 2. Export the environment variable and run
 export NDD_DATA_DIR=$(pwd)/data
-./build/ndd-avx2
+./build/ndd
 ```
 
 Alternatively, as a single line:
 
 ```bash
-NDD_DATA_DIR=./data ./build/ndd-avx2
+NDD_DATA_DIR=./data ./build/ndd
 ```
 
 ---
 
-## 5. Docker Deployment
+
+
+## 3. Docker Deployment
 
 We provide a Dockerfile for easy containerization. This ensures a consistent runtime environment and simplifies the deployment process across various platforms.
 
@@ -206,9 +279,12 @@ The container exposes port `8080` and stores data in `/data` inside container. Y
 docker run \
   -p 8080:8080 \
   -v endee-data:/data \
+  -e NDD_AUTH_TOKEN="your_secure_token" \
   --name endee-server \
   endee-oss:latest
 ```
+
+leave `NDD_AUTH_TOKEN` empty or remove it to run endee without authentication.
 
 ### Alternatively: Docker Compose
 
@@ -221,7 +297,7 @@ You can also use `docker-compose` to run the service.
 
 ---
 
-## 6. Running Docker container from registry
+## 4. Running Docker container from registry
 
 You can run Endee directly using the pre-built image from Docker Hub without building locally.
 
@@ -262,21 +338,6 @@ for more details visit [docs.endee.io](https://docs.endee.io/quick-start)
 
 ---
 
-## Examples
-
-Check out the `/examples` directory for practical implementations:
-
-### 🤖 RAG Semantic Search
-A production-ready Retrieval Augmented Generation system featuring:
-- Hybrid search (semantic + BM25 keyword matching)
-- Neural re-ranking with cross-encoders
-- Interactive Streamlit web interface
-- 100+ AI/ML knowledge base articles
-
-**[View RAG Example →](./examples/rag-semantic-search)**
-
----
-
 ## Contribution
 
 We welcome contributions from the community to help make vector search faster and more accessible for everyone. To contribute:
@@ -302,7 +363,7 @@ See the LICENSE file for full license terms.
 
 ## Trademark and Branding
 
-"Endee" and the Endee logo are trademarks of Endee Labs.
+“Endee” and the Endee logo are trademarks of Endee Labs.
 
 The Apache License 2.0 does **not** grant permission to use the Endee name,
 logos, or branding in a way that suggests endorsement or affiliation.
